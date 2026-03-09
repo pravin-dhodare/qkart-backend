@@ -1,5 +1,5 @@
 const config = require('../config/config');
-const tokenTypes = require('../token-types').tokenTypes;
+const { tokenTypes } = require('./token-types');
 const User = require('../models');
 const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt');
 
@@ -15,7 +15,7 @@ const jwtVerify = async (payload, done) => {
             return done(new Error('Invalid token type'), false);
         }
         const user = await User.findById(payload.sub);
-        if ( !user) {
+        if (!user) {
             return done(new Error('User not found'), false);
         }
         return done(null, user);
@@ -24,8 +24,8 @@ const jwtVerify = async (payload, done) => {
     }
 }
 
-const JwtStrategy = new JWTStrategy(jwtOptions, jwtVerify);
+const jwtStrategy = new JWTStrategy(jwtOptions, jwtVerify);
 
 module.exports = {
-    JwtStrategy,
+    jwtStrategy,
 }

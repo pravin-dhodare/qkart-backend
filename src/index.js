@@ -15,9 +15,9 @@ mongoose.connect(connectionString, connectionOptions)
         process.exit(1);
     });
 
-app.get('/', (req, res) => {
-    res.send('Welcome to QKart!');
-});
+// app.get('/', (req, res) => {
+//     res.send('Welcome to QKart!');
+// });
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
