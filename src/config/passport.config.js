@@ -1,6 +1,6 @@
 const config = require('../config/config');
 const { tokenTypes } = require('./token-types');
-const User = require('../models');
+const { User } = require('../models');
 const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt');
 
 // JWT Options for Passport JWT Strategy

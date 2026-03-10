@@ -2,9 +2,13 @@ const router = require("express").Router();
 const { UserController } = require("../../controllers");
 const { userValidation } = require("../../validations");
 const validate = require("../../middlewares/validate");
+const auth = require("../../middlewares/auth");
 
-// Fetch all users - /users/all
-router.get('/all', validate(userValidation.getAllUsers), UserController.getAllUsers);
+// All routes in this file are protected and require authentication
+// router.use(auth());
+
+// Fetch all users - /users/all (Added auth middleware to protect this route)
+router.get('/all', validate(userValidation.getAllUsers), auth(), UserController.getAllUsers);
 
 // Fetch user by email - /users/email/:email
 router.get('/email/:email', validate(userValidation.getUserByEmail), UserController.getUserByEmail);

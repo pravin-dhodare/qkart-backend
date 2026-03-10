@@ -25,6 +25,8 @@ const envVarsSchema = Joi.object().keys({
     JWT_ACCESS_EXPIRATION_MINUTES: Joi.number()
         .default(30)
         .description("minutes after which access tokens expire"),
+    JWT_EXPIRATION_MINUTES: Joi.number()
+        .description('Legacy/alternate env var for access token expiration (minutes)'),
 }).unknown();
 
 const { value: envVars, error } = envVarsSchema.prefs({ errors: { label: 'key' } }).validate(process.env);
@@ -49,6 +51,6 @@ module.exports = {
     default_address: DEFAULT_ADDRESS,
     jwt: {
         secret: envVars.JWT_SECRET,
-        accessExpirationMinutes: envVars.JWT_ACCESS_EXPIRATION_MINUTES,
+        accessExpirationMinutes: envVars.JWT_EXPIRATION_MINUTES,
     },
 };
