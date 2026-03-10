@@ -1,6 +1,6 @@
 const httpStatus = require("http-status");
 const config = require("../config/config");
-const ApiError = require("../utils/ApiError");
+const ApiError = require("../utils/api-errors");
 
 // Convert any thrown error to a consistent ApiError-like shape
 // (Place this BEFORE errorHandler in app.js)

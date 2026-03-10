@@ -1,5 +1,5 @@
-const userService = require('./user.service');
-const apiError = require('../utils/api-error');
+const { getUserByEmail } = require('./user.service');
+const ApiError = require('../utils/api-errors');
 const httpStatus = require('http-status');
 
 
@@ -11,17 +11,17 @@ const httpStatus = require('http-status');
  */
 const loginWithEmailAndPassword = async (email, password) => {
     if (!email || !password) {
-        throw new apiError(httpStatus.BAD_REQUEST, 'Email and password are required');
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Email and password are required');
     }
 
-    const user = await userService.getUserByEmail(email);
+    const user = await getUserByEmail(email);
     if (!user) {
-        throw new apiError(httpStatus.UNAUTHORIZED, 'Invalid email or password (No user found)');
+        throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid email or password (No user found)');
     }
 
     const isPasswordMatch = await user.isPasswordMatch(password);
     if (!isPasswordMatch) {
-        throw new apiError(httpStatus.UNAUTHORIZED, 'Invalid email or password (Password mismatch)');
+        throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid email or password (Password mismatch)');
     }
 
     return user;

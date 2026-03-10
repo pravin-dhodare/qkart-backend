@@ -1,7 +1,7 @@
 const { User } = require('../models/user.model');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const httpStatus = require('http-status');
-const ApiError = require('../utils/ApiError');
+const ApiError = require('../utils/api-errors');
 
 /**
  * Get user by email
@@ -22,6 +22,14 @@ const getUserById = async (id) => {
 }
 
 /**
+ * Get all users
+ * @returns {Promise<User[]>}
+ */
+const getAllUsers = async () => {
+    return User.find();
+}
+
+/**
  * Create a new user
  * @param {Object} userBody 
  * @returns {Promise<User>}
@@ -36,8 +44,8 @@ const createUser = async (userBody) => {
     }
 
     // Hash the password before saving
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
 
     // Create and save the new user
     const newUser = new User({
@@ -51,4 +59,5 @@ module.exports = {
     getUserByEmail,
     getUserById,
     createUser,
+    getAllUsers,
 }

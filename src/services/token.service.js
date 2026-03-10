@@ -22,11 +22,9 @@ const generateAuthTokens = async (user) => {
     const accessToken = generateToken(user.id, accessTokenExpires, tokenTypes.ACCESS);
 
     return {
-        access: {
             token: accessToken,
             expires: accessTokenExpires.toISOString(),
-        },
-    }
+        };
 }
 
 module.exports = {
